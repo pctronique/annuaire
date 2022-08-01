@@ -7,10 +7,8 @@ function addRow(number, name, firstname, adresse, phone, phone_mobile, email) {
     '<th class="id_numb" scope="row">'+number+'</th>'+
     '<td class="name">'+name+'</td>'+
     '<td class="firstname">'+firstname+'</td>'+
-    '<td class="adresse">'+adresse+'</td>'+
     '<td class="phone">'+phone+'</td>'+
     '<td class="phone_mobile">'+phone_mobile+'</td>'+
-    '<td class="email">'+email+'</td>'+
     '<th scope="col"><img src="./img/icons8-modifier.svg" class="modif" alt="modifier" /></th>'+
     '<th scope="col"><img src="./img/poubelle.svg" class="delete" alt="supprimer" /></th>'+
     '</tr>';
@@ -188,6 +186,7 @@ function loadFile(event) {
 
 document.getElementById('import').onclick = function() {
 	var files = document.getElementById('fileToUpload').files;
+    console.log(files.length);
     if (files.length <= 0) {
         return false;
     }
@@ -196,10 +195,10 @@ document.getElementById('import').onclick = function() {
   
     fr.onload = function(e) { 
     console.log(e);
-    var result = JSON.parse(document.getElementById('fileToUpload').files[0]);
-    console.log(result);
-    /*var formatted = JSON.stringify(result, null, 2);
-		document.getElementById('result').value = formatted;*/
+    var result = JSON.parse(e.target.result);
+    numberList = result.number;
+    listData = result.listData;
+    addValueTab();
   }
   
   fr.readAsText(files.item(0));
@@ -218,12 +217,11 @@ document.getElementById("annuler").addEventListener("click", function(e) {
 })
 
 
-document.getElementById("save").addEventListener("click", saveFile)
+document.getElementById("save").addEventListener("click", saveFile);
 
 
 document.getElementById("fileToUpload").addEventListener("click", function(e) {
     e.target.files;
-    console.log(loadFile(e));
 })
 
 loadLocal();
