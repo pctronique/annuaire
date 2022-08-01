@@ -18,7 +18,21 @@
     <title>Document</title>
   </head>
   <body>
-    <section class="container m-5">
+    <section class="container mt-1">
+      <div class="d-flex justify-content-center m-2">
+        <input type="file" id="fileToUpload" value="Import">
+        <label for="fileToUpload" type="button" class="btn btn-dark m-1">
+          Récupérer
+        </label>
+        <button id="import" type="button" class="btn btn-dark m-1">
+          Importer
+        </button>
+        <button id="save" type="button" class="btn btn-dark m-1">
+          Sauvegarder
+        </button>
+      </div>
+    </section>
+    <section class="container mt-5">
       <h1 class="text-center p-3">
         <i class="bi bi-journal-text m-1"></i>Annuaire
       </h1>
@@ -32,7 +46,7 @@
             type="text"
             id="name"
             pattern=".{3,}"
-            class="form-control-plaintext"
+            class="form-control"
             required
           />
         </div>
@@ -46,7 +60,7 @@
             type="text"
             id="firstname"
             pattern=".{3,}"
-            class="form-control-plaintext"
+            class="form-control"
             required
           />
         </div>
@@ -60,7 +74,7 @@
             type="text"
             id="adresse"
             pattern=".{3,}"
-            class="form-control-plaintext"
+            class="form-control"
             required
           />
         </div>
@@ -74,7 +88,7 @@
             type="text"
             id="codePostal"
             pattern=".{3,}"
-            class="form-control-plaintext"
+            class="form-control"
             required
           />
         </div>
@@ -88,7 +102,7 @@
             type="text"
             id="city"
             pattern=".{3,}"
-            class="form-control-plaintext"
+            class="form-control"
             required
           />
         </div>
@@ -102,7 +116,7 @@
             type="text"
             id="phone"
             pattern=".{3,}"
-            class="form-control-plaintext"
+            class="form-control"
             required
           />
         </div>
@@ -116,7 +130,7 @@
             type="text"
             id="phone_mobile"
             pattern=".{3,}"
-            class="form-control-plaintext"
+            class="form-control"
             required
           />
         </div>
@@ -130,7 +144,7 @@
             type="text"
             id="email"
             pattern=".{3,}"
-            class="form-control-plaintext"
+            class="form-control"
             required
           />
         </div>
@@ -144,25 +158,25 @@
         </button>
       </div>
     </section>
+    <section class="container mt-5">
 
-    <section class="container m-5">
-      <div class="d-flex justify-content-center m-2">
-        <input type="file" id="fileToUpload" value="Import">
-        <label for="fileToUpload" type="button" class="btn btn-dark m-1">
-          Récupérer
-        </label>
-        <button id="import" type="button" class="btn btn-dark m-1">
-          Importer
-        </button>
-        <button id="save" type="button" class="btn btn-dark m-1">
-          Sauvegarder
-        </button>
-      </div>
+          <div class="row justify-content-md-center">
+            <div class="col-md-auto">
+              <label for="recherche" class="col-form-label m-2" style="text-align: right;">Rechercher<i class="bi bi-search m-1"></i></label>
+            </div>
+            <div class="col-md-auto">
+              <input type="text" class="form-control m-2" id="recherche" name="recherche">
+            </div>
+            <div class="col-md-auto">
+              <button id="bt_find" type="submit" id="find" class="btn btn-dark m-2">Rechercher</button>
+            </div>
+          </div>
+    </section>
+    <section class="container mt-2">
       <table class="table table-dark table-striped">
         <thead>
           <tr>
-            <th scope="col">#</th>
-            <th scope="col">Nom<i class="bi bi-person-fill m-1"></i></th>
+            <th scope="col">Nom<i class="bi bi-journal-bookmark m-1"></i></th>
             <th scope="col">Prénom<i class="bi bi-person-fill m-1"></i></th>
             <th scope="col">
               Téléphone<i class="bi bi-telephone-fill m-1"></i>

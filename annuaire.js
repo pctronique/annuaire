@@ -2,13 +2,12 @@ let numberList = 0;
 let listData = [];
 let id = -1;
 
-function addRow(number, name, firstname, adresse, phone, phone_mobile, email) {
-    return '<tr id="annuaire_'+number+'">'+
-    '<th class="id_numb" scope="row">'+number+'</th>'+
-    '<td class="name">'+name+'</td>'+
-    '<td class="firstname">'+firstname+'</td>'+
-    '<td class="phone">'+phone+'</td>'+
-    '<td class="phone_mobile">'+phone_mobile+'</td>'+
+function addRow(data) {
+    return '<tr id="annuaire_'+data.id+'">'+
+    '<td class="name">'+data.name+'</td>'+
+    '<td class="firstname">'+data.firstname+'</td>'+
+    '<td class="phone">'+data.phone+'</td>'+
+    '<td class="phone_mobile">'+data.phone_mobile+'</td>'+
     '<th scope="col"><img src="./img/icons8-modifier.svg" class="modif" alt="modifier" /></th>'+
     '<th scope="col"><img src="./img/poubelle.svg" class="delete" alt="supprimer" /></th>'+
     '</tr>';
@@ -91,15 +90,26 @@ function rechercheKey(id) {
     return -1;
 }
 
-function addValueTab() {
+function findTab() {
+    let find = document.getElementById("recherche").value;
     let list_annuaire = document.getElementById("list_annuaire");
     list_annuaire.innerHTML = "";
-    listData.forEach(element => {
-        list_annuaire.innerHTML += addRow(element.id, element.name, element.firstname, 
-            element.adresse, element.codePostal, element.city, element.phone, element.phone_mobile, element.email);
-    });
+    if(find == "") {
+        listData.forEach(element => {
+            list_annuaire.innerHTML += addRow(element);
+        });
+    } else {
+        let tableFind = listFind(find);
+        tableFind.forEach(element => {
+            list_annuaire.innerHTML += addRow(element);
+        });
+    }
 
     addEventAll();
+}
+
+function addValueTab() {
+    findTab();
 
     saveLocal();
 }
@@ -128,8 +138,6 @@ document.getElementById("valider").addEventListener("click", function(e) {
         id = -1;
 
         addValueTab();
-
-        console.log(listData);
 
         annulerDef();
 
@@ -186,15 +194,13 @@ function loadFile(event) {
 
 document.getElementById('import').onclick = function() {
 	var files = document.getElementById('fileToUpload').files;
-    console.log(files.length);
     if (files.length <= 0) {
         return false;
     }
   
     var fr = new FileReader();
   
-    fr.onload = function(e) { 
-    console.log(e);
+    fr.onload = function(e) {
     var result = JSON.parse(e.target.result);
     numberList = result.number;
     listData = result.listData;
@@ -204,24 +210,35 @@ document.getElementById('import').onclick = function() {
   fr.readAsText(files.item(0));
 };
 
-/*
-ajouter une image dans le general
-*/
-function load_file() {
-    document.getElementById('fileToUpload').click();
+
+function listFind(find) {
+    let values = [];
+    listData.forEach(element => {
+        if(element.name.toLowerCase().includes(find.toLowerCase()) || 
+            element.firstname.toLowerCase().includes(find.toLowerCase()) || 
+            element.adresse.toLowerCase().includes(find.toLowerCase()) || 
+            element.codePostal.toLowerCase().includes(find.toLowerCase()) || 
+            element.city.toLowerCase().includes(find.toLowerCase()) || 
+            element.phone.toLowerCase().includes(find.toLowerCase()) || 
+            element.phone_mobile.toLowerCase().includes(find.toLowerCase()) || 
+            element.email.toLowerCase().includes(find.toLowerCase())) {
+                values.push(element);
+        }
+    });
+    return values;
 }
+
+
 
 document.getElementById("annuler").addEventListener("click", function(e) {
     e.preventDefault();
     annulerDef();
 })
 
-
 document.getElementById("save").addEventListener("click", saveFile);
 
-
-document.getElementById("fileToUpload").addEventListener("click", function(e) {
-    e.target.files;
+document.getElementById("bt_find").addEventListener("click", function(e) {
+    findTab();
 })
 
 loadLocal();
