@@ -187,13 +187,9 @@ function saveFile() {
     fileLink.click();
 }
 
-function loadFile(event) {
+function loadFiles(event) {
     let files = event.target.files;
-    return files;
-}
 
-document.getElementById('import').onclick = function() {
-	var files = document.getElementById('fileToUpload').files;
     if (files.length <= 0) {
         return false;
     }
@@ -208,7 +204,7 @@ document.getElementById('import').onclick = function() {
   }
   
   fr.readAsText(files.item(0));
-};
+}
 
 
 function listFind(find) {
@@ -240,5 +236,8 @@ document.getElementById("save").addEventListener("click", saveFile);
 document.getElementById("bt_find").addEventListener("click", function(e) {
     findTab();
 })
+
+// en cas de changement de fichier (ici d'image)
+document.getElementById('fileToUpload').addEventListener('change', loadFiles);
 
 loadLocal();
