@@ -1,6 +1,7 @@
 let numberList = 0;
 let listData = [];
 let id = -1;
+let choice = "A";
 
 function addRow(data) {
     return '<tr id="annuaire_'+data.id+'">'+
@@ -90,18 +91,26 @@ function rechercheKey(id) {
     return -1;
 }
 
+function validateName(name) {
+    return name.toLowerCase().trim().substring(0, 1) == choice.toLowerCase();
+}
+
 function findTab() {
     let find = document.getElementById("recherche").value;
     let list_annuaire = document.getElementById("list_annuaire");
     list_annuaire.innerHTML = "";
     if(find == "") {
         listData.forEach(element => {
-            list_annuaire.innerHTML += addRow(element);
+            if(validateName(element.name)) {
+                list_annuaire.innerHTML += addRow(element);
+            }
         });
     } else {
         let tableFind = listFind(find);
         tableFind.forEach(element => {
-            list_annuaire.innerHTML += addRow(element);
+            if(validateName(element.name)) {
+                list_annuaire.innerHTML += addRow(element);
+            }
         });
     }
 
@@ -125,8 +134,7 @@ document.getElementById("valider").addEventListener("click", function(e) {
     let phone_mobile = document.getElementById("phone_mobile").value;
     let email = document.getElementById("email").value;
 
-    if(name.trim() != "" && firstname.trim() != "" && adresse.trim() != "" && 
-        phone.trim() != "" && phone_mobile.trim() != "" && email.trim() != "") {
+    if(name.trim() != "" && firstname.trim() != "") {
 
         if(id < 0) {
             listData.push(addRowData(numberList, name, firstname, adresse, codePostal, city, phone, phone_mobile, email));
@@ -142,7 +150,7 @@ document.getElementById("valider").addEventListener("click", function(e) {
         annulerDef();
 
     } else {
-        alert("Merci d'entrer des valeurs valides.");
+        alert("Merci d'entrer un nom et un prénom.");
     }
 })
 
@@ -187,13 +195,9 @@ function saveFile() {
     fileLink.click();
 }
 
-function loadFile(event) {
+function loadFiles(event) {
     let files = event.target.files;
-    return files;
-}
 
-document.getElementById('import').onclick = function() {
-	var files = document.getElementById('fileToUpload').files;
     if (files.length <= 0) {
         return false;
     }
@@ -208,7 +212,7 @@ document.getElementById('import').onclick = function() {
   }
   
   fr.readAsText(files.item(0));
-};
+}
 
 
 function listFind(find) {
@@ -228,6 +232,31 @@ function listFind(find) {
     return values;
 }
 
+function recupeLetter() {
+    let myTab = document.getElementById("myTab");
+    myTab.querySelectorAll('.onglet-click').forEach(element => {
+        console.log(element);
+        if(element.classList.contains("active")) {
+            return element.innerHTML;
+        }
+    });
+    return "";
+}
+
+function createTab() {
+    let myTab = document.getElementById("myTab");
+    for (let index = 65; index < 91; index++) {
+        let charDef = String.fromCharCode(index);
+        let active = "";
+        if(index == 65) {
+            active = " active";
+        }
+        myTab.innerHTML += '<li class="nav-item" role="presentation">'+
+        '<button class="nav-link'+active+' onglet-click" id="home-tab" data-bs-toggle="tab" data-bs-target="#'+charDef+'-tab-pane" type="button" role="tab" aria-controls="'+charDef+'-tab-pane" aria-selected="true">'+charDef+'</button>'+
+        '</li>';
+    }
+}
+
 
 
 document.getElementById("annuler").addEventListener("click", function(e) {
@@ -241,4 +270,15 @@ document.getElementById("bt_find").addEventListener("click", function(e) {
     findTab();
 })
 
+// en cas de changement de fichier (ici d'image)
+document.getElementById('fileToUpload').addEventListener('change', loadFiles);
+
 loadLocal();
+createTab();
+
+document.querySelectorAll('.onglet-click').forEach(element => {
+    element.addEventListener("click", function(e) {
+        choice = e.target.innerHTML;
+        findTab();
+    })
+})
