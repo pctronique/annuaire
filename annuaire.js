@@ -125,8 +125,7 @@ document.getElementById("valider").addEventListener("click", function(e) {
     let phone_mobile = document.getElementById("phone_mobile").value;
     let email = document.getElementById("email").value;
 
-    if(name.trim() != "" && firstname.trim() != "" && adresse.trim() != "" && 
-        phone.trim() != "" && phone_mobile.trim() != "" && email.trim() != "") {
+    if(name.trim() != "" && firstname.trim() != "") {
 
         if(id < 0) {
             listData.push(addRowData(numberList, name, firstname, adresse, codePostal, city, phone, phone_mobile, email));
@@ -142,7 +141,7 @@ document.getElementById("valider").addEventListener("click", function(e) {
         annulerDef();
 
     } else {
-        alert("Merci d'entrer des valeurs valides.");
+        alert("Merci d'entrer un nom et un prénom.");
     }
 })
 
