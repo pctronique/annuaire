@@ -12,9 +12,28 @@ img {
 
 
 body {
+    min-width: 420px;
     background-color: rgb(218, 218, 218);
 }
 
 input[type="file"] {
     display: none;
+}
+
+/**********************/
+/** version < 500px ***/
+/**********************/
+@media screen and (max-width: 767px) {
+    .justify-content-md-center {
+        text-align: center;
+    }
+}
+
+/**********************/
+/** version < 500px ***/
+/**********************/
+@media screen and (max-width: 575px) {
+        .col-form-label {
+            text-align: left;
+        }
 }
