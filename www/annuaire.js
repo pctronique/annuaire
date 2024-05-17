@@ -125,7 +125,8 @@ document.getElementById("valider").addEventListener("click", function(e) {
     let phone_mobile = document.getElementById("phone_mobile").value;
     let email = document.getElementById("email").value;
 
-    if(name.trim() != "" && firstname.trim() != "") {
+    if(name.trim() != "" && firstname.trim() != "" && adresse.trim() != "" && 
+        phone.trim() != "" && phone_mobile.trim() != "" && email.trim() != "") {
 
         if(id < 0) {
             listData.push(addRowData(numberList, name, firstname, adresse, codePostal, city, phone, phone_mobile, email));
@@ -141,7 +142,7 @@ document.getElementById("valider").addEventListener("click", function(e) {
         annulerDef();
 
     } else {
-        alert("Merci d'entrer un nom et un prénom.");
+        alert("Merci d'entrer des valeurs valides.");
     }
 })
 
@@ -186,9 +187,13 @@ function saveFile() {
     fileLink.click();
 }
 
-function loadFiles(event) {
+function loadFile(event) {
     let files = event.target.files;
+    return files;
+}
 
+document.getElementById('import').onclick = function() {
+	var files = document.getElementById('fileToUpload').files;
     if (files.length <= 0) {
         return false;
     }
@@ -203,7 +208,7 @@ function loadFiles(event) {
   }
   
   fr.readAsText(files.item(0));
-}
+};
 
 
 function listFind(find) {
@@ -235,8 +240,5 @@ document.getElementById("save").addEventListener("click", saveFile);
 document.getElementById("bt_find").addEventListener("click", function(e) {
     findTab();
 })
-
-// en cas de changement de fichier (ici d'image)
-document.getElementById('fileToUpload').addEventListener('change', loadFiles);
 
 loadLocal();
